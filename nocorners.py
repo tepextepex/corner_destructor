@@ -3,6 +3,7 @@ import os.path
 import gdal
 import numpy as np
 from scipy import ndimage
+import argparse
 
 
 def eliminate_corners(input_raster, output_dir=None):
@@ -41,6 +42,16 @@ def eliminate_corners(input_raster, output_dir=None):
     ds = None
 
 
+def cli_eliminate_corners():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("raster", help="Raster to process (full path)")
+    parser.add_argument('-o', '--outdir', default=None,
+                        help='output directory path (if not specified, the result will be stored in the same directory as the input raster)')
+    args = parser.parse_args()
+    eliminate_corners(args.raster, output_dir=args.outdir)
+
+
 if __name__ == "__main__":
-    raster = "/home/tepex/NIERSC/IEPI/20200629/terrasar/dims_op_oc_dfd2_644615490_1/TSX-1.SAR.L1B/TSX1_SAR__MGD_RE___SC_S_SRA_20200629T021043_20200629T021103/IMAGEDATA/IMAGE_HH_SRA_wide_002.tif"
-    eliminate_corners(raster)
+    # raster = "/home/tepex/NIERSC/IEPI/20200629/terrasar/dims_op_oc_dfd2_644615490_1/TSX-1.SAR.L1B/TSX1_SAR__MGD_RE___SC_S_SRA_20200629T021043_20200629T021103/IMAGEDATA/IMAGE_HH_SRA_wide_002.tif"
+    # eliminate_corners(raster)
+    cli_eliminate_corners()
